@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>注册表单</title>
+</head>
+
+<body>
+<p>姓名：<input type="text" id="txt"/></p>
+<p>密码：<input type="password" id="key"/></p>
+<p>确认密码：<input type="password" id="key2"/></p>
+<input type="button" value="提交" id="btn"/>
+
+
+<!--		<form action="http://www.baidu.com" method="get">
+			<label>用户名</label><input type="text" name="username" id="username" />
+			<label>新密码</label><input type="password" name="psd1" id="psd1" />
+			<label>确认</label><input type="password" name="psd2" id="psd2" />
+			<input type="submit" value="注册" onclick="return checkForm()" />
+		</form>
+  -->      
+<script>
+var txt=document.getElementById("txt");
+var btn=document.getElementById("btn");
+var key=document.getElementById("key");
+var key2=document.getElementById("key2");
+btn.onclick=function(){
+	var txt1=txt.value;
+	var keyf=key.value;
+	var keyl=key2.value;
+	if(txt1.length<6||txt1.length>14){
+		alert("请重新输入一个长度合适的名字")}
+		//return false;	
+		//}	
+	else if (txt1.charCodeAt(0)>=48&&txt1.charCodeAt(0)<=57){
+		alert("请输入正确格式")
+		//return false;
+	}else{
+		for(var i=0;i<txt1.length;i++){
+			if(!((txt1.charCodeAt(i)>=48&&txt1.charCodeAt(i)<=57)||(txt1.charCodeAt(i)>=65&&txt1.charCodeAt(i)<=90)||(txt1.charCodeAt(i)>=97&&txt1.charCodeAt(i)<=122)||txt1.charCodeAt(i)==95)){
+		//return false;
+		alert("请重新输入用户名")
+		}
+		  //if(keyf.value!=keyl.value){
+			//alert("请确认密码");
+			//break;}			
+		}
+ for(j=0;j<keyf.length;j++){
+	  if(keyf.charCodeAt(j)==keyl.charCodeAt(j)){
+		alert("提交成功");
+		break;
+	}else{
+		alert("请重新确认密码");
+		break;}	 
+ }		
+	}
+	
+
+	//return true;
+	//alert("输入成功")	
+}
+ ////////////////////不标准型只能检验用户名规范，密码只是检验是否相等
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+/*
+			1.注册页面的简单数据校验，（12K）
+    名字只能包含数字、字母和下划线，数字不可以开头，长度不低于6，不高于20
+    密码必须一致(密码也不能是数字开头，也只能包含数字，字母和下划线)
+    所有输入框不能为空，并输入合法，点击提交才可以正确提交表单数据
+		
+		//检查表单元素的函数
+		var input1 = document.getElementById("username");
+		var input2 = document.getElementById("psd1");
+		var input3 = document.getElementById("psd2");
+		function checkInput(inputx){
+			if(inputx.value.length>20||inputx.value.length<6){
+				return false;
+			}else if(inputx.value.charCodeAt(0)>=48&&inputx.value.charCodeAt(0)<=57){
+				return false;
+			}else{
+				var str=inputx.value;
+				for(var i=0;i<str.length;i++){
+					if(!((str.charCodeAt(i)>=48&&str.charCodeAt(i)<=57)||(str.charCodeAt(i)>=65&&str.charCodeAt(i)<=90)||(str.charCodeAt(i)>=97&&str.charCodeAt(i)<=122)||str.charCodeAt(i)==95)){
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		function checkForm(){
+			if(checkInput(input1)&&checkInput(input2)&&checkInput(input3)){
+				if(input2.value!=input3.value){
+					alert('两次输入密码不一致');
+					return false;
+				}else{
+					return true;
+				}
+			}else{
+				alert("您输入的格式不对。重新输入");
+				return false;
+			}
+		}
+		//阻止表单提交:   onclick="return checkForm()"
+		// 在checkForm中返回false就会阻止表单提交
+		//提交表单: 把 name属性所对应的值及输入框的value传给服务器
+		// username=xxx&psd1=xxx&psd2=yyyy  (method是get)
+		
+			
+*/			
+			
+</script>
+</body>
+</html>

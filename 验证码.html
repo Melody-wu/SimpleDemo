@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>生成验证码</title>
+</head>
+
+<body>
+<input type="text" id="txt"/><input type="button" id="btn" value="生成验证码"/>
+<script>
+var txt=document.getElementById("txt");
+var btn=document.getElementById("btn");
+btn.onclick=function(){
+	var  arr=[];
+		for(var j=0;j<4;j++){
+			var i=randomNumber(48,122)//调用 随机函数
+
+	for(var i;i<=122;i++){
+		if((i>=48&&i<=57)||(i>=65&&i<=90)||(i>=97&&i<=122)){
+			var m=String.fromCharCode(i);  //把assic数转化为字符串
+			arr.push(m);
+			break;
+			}
+        //console.log(arr)
+	}
+	txt.value=arr.join("");
+	}
+}
+function randomNumber(min,max){
+ return	parseInt(Math.random()*(max-min+1)+min);//n的数加了一了我才取到3不然只是1到2 ,必须这样写 不然只写max或者不+min 只是0到max值中获取,这种封装的函数 可以任意范围的
+ }
+ //var n=randomNumber(0,3)
+ //var n=randomNumber(4,8) // 随机数只会在4-8中生成
+ //alert(n)	
+</script>
+</body>
+</html>

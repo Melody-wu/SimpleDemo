@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#img {display:block;display:none;}
+</style>
+</head>
+
+<body>
+<button id="btn">获取二维码</button>
+<img src="mao.gif" id="img"/>
+<script>
+var btn=document.getElementById("btn");
+var img=document.getElementById("img");
+var times=0;
+var i=5;
+var flag=true;
+btn.onclick=function(){
+	img.style.display="block";			
+	if(flag){
+	btn.innerHTML="重新获得二维码(5)";
+	times=setInterval(start,1000);
+	}
+}
+function start(){
+    i--;
+   	btn.innerHTML="重新获取二维码"+i;
+	flag=false;
+	if(i==0){
+		clearInterval(times);
+        btn.innerHTML="获取二维码";
+		img.style.display="none";
+	 i=5;
+	 flag=true;		
+	}
+}
+</script>
+</body>
+</html>
