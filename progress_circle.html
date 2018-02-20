@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Canvas实现圆点进度条</title>  
+    <style>  
+        body,html{
+            /*background: #fafafa;*/
+        }
+        .canvasArea{ margin:200px auto; height:400px; width:400px; position: relative; padding:10px; }  
+        .canvasArea p{ position:absolute; width:100%; height: 100%; line-height:400px; text-align:center; font-size:24px;}  
+        canvas{ position: absolute; width: 100%; height: 100%; top: 0; left: 0; }  
+        #perValue{ font-weight:bold; color:red; padding-right:10px;}  
+    </style>  
+</head>  
+<body>  
+
+<div class="canvasArea" style="">  
+    <p><span id="perValue">0</span></p>  
+    <canvas width="400" height="400" id="mask" style="z-index:10"></canvas>  
+    <canvas width="400" height="400" id="bg"></canvas>  
+    <canvas width="400" height="400" id="circle" style="z-index:12"></canvas>  
+</div>  
+  
+<script type="text/javascript">  
+(function(){  
+    var progress = {  
+        bgid:null,  
+        maskid:null,  
+        circleid:null,  
+        x:0,  
+        y:0,  
+        radius:0,  
+        perV:0,  
+        load:0,  
+        bgctx:null,  
+        maskctx:null,  
+        circlectx:null,  
+  
+        init:function(paramObj){  
+            this.bgid = paramObj.bgid;  
+            this.maskid = paramObj.maskid;  
+            this.circleid = paramObj.circleid;  
+            this.x = paramObj.x;  
+            this.y = paramObj.y;  
+            this.radius = paramObj.radius;  
+            this.perV = paramObj.perV;  
+            this.load = paramObj.initLoaded;  
+  
+            bgctx = document.querySelector(this.bgid).getContext("2d");  
+            circlectx = document.querySelector(this.circleid).getContext("2d");  
+            maskctx = document.querySelector(this.maskid).getContext("2d");  
+  
+        },  
+  
+        drawBgLayer:function(){  
+            bgctx.beginPath();  
+            bgctx.lineWidth = 10;  
+            bgctx.strokeStyle = "#f8f8f8";
+            bgctx.lineCap="round";  
+            bgctx.arc(this.x, this.y, this.radius, (5/6)*Math.PI, (1/6) * Math.PI, false);  
+            bgctx.stroke();  
+        },  
+        drawMaskLayer:function(){  
+            var draw = setInterval(function(){  
+                if (progress.load<=progress.perV) {  
+                    progress.drawCircle();  
+                    progress.load += 1;  
+                } else {  
+                    clearInterval(draw);  
+                    draw = null;  
+                }  
+            }, 10);  
+        },  
+        drawCircle:function(){  
+            document.querySelector("#perValue").innerHTML = this.load;  
+            var vv = this.load/100*(4/3)+(5/6);  
+            if(vv>2){  
+                vv = vv-2;  
+            }  
+            var loaded = vv*Math.PI;  
+            maskctx.clearRect (0,0,400,400);  
+            maskctx.beginPath();  
+            maskctx.lineWidth = 10;  
+            maskctx.strokeStyle = '#00acee';
+            maskctx.lineCap="round";  
+            maskctx.arc(this.x, this.y, this.radius, (5/6)*Math.PI, loaded, false);  
+            maskctx.stroke();  
+            
+            maskctx.beginPath();  
+            maskctx.lineWidth = 10;  
+            maskctx.strokeStyle = '#70d2db';
+        // maskctx.lineCap="round";  
+            maskctx.arc(this.x, this.y, this.radius,(5/6)*Math.PI,loaded, false);  
+            maskctx.stroke();
+
+            maskctx.beginPath();  
+            maskctx.lineWidth = 10;  
+            maskctx.strokeStyle = '#60b9d9';
+        // maskctx.lineCap="round";  
+            maskctx.arc(this.x, this.y, this.radius,(5/6)*Math.PI,1.6*Math.PI, false);  
+            maskctx.stroke();
+
+            maskctx.beginPath();  
+            maskctx.lineWidth = 10;  
+            maskctx.strokeStyle = '#40A7e9';
+            // maskctx.lineCap="round";  
+            maskctx.arc(this.x, this.y, this.radius,(5/6)*Math.PI,1.2*Math.PI, false);  
+            maskctx.stroke();
+
+            maskctx.beginPath();  
+            maskctx.lineWidth = 10;  
+            maskctx.strokeStyle = '#4fbae8';
+            // maskctx.lineCap="round";  
+            maskctx.arc(this.x, this.y, this.radius, (5/6)*Math.PI,1.1*Math.PI, false);  
+            maskctx.stroke();
+
+            maskctx.beginPath();  
+            maskctx.lineWidth = 10;  
+            maskctx.strokeStyle = '#57b7e1';
+            // maskctx.lineCap="round";  
+            maskctx.arc(this.x, this.y, this.radius, (5/6)*Math.PI,Math.PI, false);  
+            maskctx.stroke();
+
+            
+
+            var para = vv*3.14;  
+            var px = this.x+this.radius*Math.cos(para-0.03);  
+            var py = this.y+this.radius*Math.sin(para-0.01); 
+            console.log(px+' '+py)   
+            circlectx.clearRect (0,0,400,400);  
+            circlectx.beginPath();  
+            circlectx.arc(px,py,10,0,360,false);
+            circlectx.lineWidth=8;  
+            // circlectx.fillStyle = 'red';  
+            circlectx.strokeStyle = '#fafafa';
+            // circlectx.fill(); 
+            circlectx.stroke();
+
+            circlectx.closePath(); 
+
+             circlectx.beginPath();  
+            circlectx.arc(px,py,6,0,360,false);  
+            circlectx.fillStyle = '#71e4dd';  
+             circlectx.fill(); 
+
+            circlectx.closePath(); 
+        }  
+    }  
+  
+    var paramObj = {  
+        bgid:'#bg',  
+        maskid:'#mask',  
+        circleid:'#circle',  
+        x:200,  
+        y:200,  
+        radius:180,  
+        perV:80,  
+        initLoaded:0,  
+    }  
+    progress.init(paramObj);  
+    progress.drawBgLayer();  
+    progress.drawMaskLayer();  
+})();  
+</script>  
+</body>  
+</html> 
